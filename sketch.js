@@ -1,8 +1,8 @@
 
 var cellSize = 20;
 var grid = [];
-var xOffset = 0;
-var yOffset = 0;
+var xOffset = 1.5;
+var yOffset = 1.732;
 let sidecount = 6;
 var h,s,l;
 
@@ -26,10 +26,11 @@ function setup () {
 
 function draw () {
     background(0, 0, 0 );
-    h = map(winMouseX, 0, width, 0, 1);
-    s = map(mouseY, 0, height, 0, 1);
-    l = map(mouseX, 0, width, 0, 1);
-    for(var i = 0; i < grid.length; i++) {
+    let t= frameCount;
+    sinFactor = map(sin(t/80), -1, 1, 0, 360)/width;
+    cosFactor = map(cos(t/100), -1, 1, 0, 360)/height;
+
+  for(var i = 0; i < grid.length; i++) {
         grid[i].show();
     }
 }
@@ -37,27 +38,35 @@ function draw () {
 function Cell(i, j) {
     this.i = i;
     this.j = j;
-
-    if(j % 2 === 0) {
-        this.x = this.i * cellSize * 1.6 ;
+  
+    if(i % 2 === 0) {
+        this.y = this.j * cellSize * yOffset ;
     } else {
-        this.x = this.i * cellSize * 1.6  + cellSize *0.8;
+        this.y = this.j * cellSize *  yOffset + cellSize* yOffset/2 ;
     }
-    
-    this.y = this.j * cellSize * 1.4 ;
+    this.x = this.i * cellSize * xOffset ;
+  
+  
     this.hasPlayer = false;
     this.show = function () {
-        fill(50, 50, 50); 
         push(); 
-        translate(this.x, this.y);
-        rotate(radians(30));
-        polygon(0, 0, cellSize, sidecount);
+        var dx = this.x;
+        var dy = this.y;
+        polygon(dx, dy, cellSize, sidecount);
         pop();
     }
 }
 
 function polygon(x, y, radius, npoints) {
     var angle = TWO_PI / npoints;
+  
+  //styling
+    fill(x*sinFactor, y*cosFactor, 170);
+    noStroke();
+    
+    push();
+    // rect(x, y, 10, 10);
+    // rotate(angle);
     beginShape();
     for (var a = 0; a < TWO_PI; a += angle) {
         var sx = x + cos(a) * radius;
@@ -65,4 +74,5 @@ function polygon(x, y, radius, npoints) {
         vertex(sx, sy);
     }
     endShape(CLOSE);
+    pop();
 }  
