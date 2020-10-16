@@ -1,9 +1,10 @@
 
-var cellSize = 10;
+var cellSize = 20;
 var grid = [];
 var xOffset = 0;
 var yOffset = 0;
 let sidecount = 6;
+var h,s,l;
 
 
 function setup () {
@@ -11,9 +12,10 @@ function setup () {
     var cols = width/cellSize;
     var rows = height/cellSize;
     colorMode(HSL,360);
+    let t = frameCount;
 
-    
 
+  
     for(j = -1; j < rows; j++) {
         for(i = -1; i < cols; i++) {
             var cell = new Cell(i, j);
@@ -24,7 +26,9 @@ function setup () {
 
 function draw () {
     background(0, 0, 0 );
-
+    h = map(winMouseX, 0, width, 0, 1);
+    s = map(mouseY, 0, height, 0, 1);
+    l = map(mouseX, 0, width, 0, 1);
     for(var i = 0; i < grid.length; i++) {
         grid[i].show();
     }
@@ -43,10 +47,7 @@ function Cell(i, j) {
     this.y = this.j * cellSize * 1.4 ;
     this.hasPlayer = false;
     this.show = function () {
-        // stroke(red, green, blue, 50);
-        noStroke();
-        fill(360/(width/cellSize)*i, 360/(height/cellSize)*j, 255);
- 
+        fill(50, 50, 50); 
         push(); 
         translate(this.x, this.y);
         rotate(radians(30));
