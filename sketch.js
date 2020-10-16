@@ -28,7 +28,7 @@ function draw () {
     background(0, 0, 0 );
     let t= frameCount;
     sinFactor = map(sin(t/80), -1, 1, 0, 360)/width;
-    cosFactor = map(cos(t/100), -1, 1, 0, 360)/height;
+    cosFactor = map(cos(t/50), -1, 1, 0, 360)/height;
 
   for(var i = 0; i < grid.length; i++) {
         grid[i].show();
@@ -61,12 +61,10 @@ function polygon(x, y, radius, npoints) {
     var angle = TWO_PI / npoints;
   
   //styling
-    fill(x*sinFactor, y*cosFactor, 170);
+    fill(x*0.5, y*0.5, (x+y)*0.25);
     noStroke();
     
     push();
-    // rect(x, y, 10, 10);
-    // rotate(angle);
     beginShape();
     for (var a = 0; a < TWO_PI; a += angle) {
         var sx = x + cos(a) * radius;
